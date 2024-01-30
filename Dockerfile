@@ -1,5 +1,5 @@
 FROM php:8.1.0-apache
-
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 ARG FILE_UID=1000
 ARG FILE_GID=1000
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -11,7 +11,7 @@ RUN groupmod -g ${FILE_GID} www-data \
 
 RUN a2enmod rewrite
 RUN docker-php-ext-install mysqli pdo_mysql
- RUN chmod +x /usr/local/bin/install-php-extensions && \
+RUN chmod +x /usr/local/bin/install-php-extensions && \
      install-php-extensions gd imagick exif zip
 #RUN apt-get update \
 #    && apt-get install -y libzip-dev libpng-dev libjpeg-dev \

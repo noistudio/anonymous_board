@@ -1,0 +1,2 @@
+
+<h{{$data['level']}} @if(isset($data['alignment']) and $data['alignment']=="left") class="text-left" @endif  @if(isset($data['alignment']) and $data['alignment']=="right") class="text-right" @endif  @if(isset($data['alignment']) and $data['alignment']=="center") class="text-center" @endif  @if(isset($data['alignment']) and $data['alignment']=="justify") class="text-justify" @endif >{{ $data['text'] }}</{{$data['level']}}h>

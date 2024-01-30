@@ -6,18 +6,22 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "barryvdh/laravel-translation-manager": "^0.6.3",
+        "codex-team/editor.js": "^2.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "intervention/image": "^2.7",
+        "kovah/laravel-html-meta": "^2.2",
         "laravel/framework": "^9.0",
         "laravel/tinker": "^2.5",
+        "mcamara/laravel-localization": "^1.6",
+        "mews/captcha": "^3.3",
         "noistudio/admin-blocks": "dev-master",
         "noistudio/artadmin": "dev-master",
         "noistudio/artcrud": "dev-master",
         "noistudio/laravel-trumbowyg": "dev-master",
-        "unisharp/laravel-filemanager": "^2.2",
-        "mcamara/laravel-localization": "^1.6",
-        "barryvdh/laravel-translation-manager": "^0.6.3"
+        "unisharp/laravel-filemanager": "^2.2"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^1.0",

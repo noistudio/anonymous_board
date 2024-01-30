@@ -1,0 +1,14 @@
+.btn-primary {
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+.btn-success {
+    color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+}
+.ce-popover--opened{
+    left:10px !important;
+    right:0 !important;
+}
