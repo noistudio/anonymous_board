@@ -33,7 +33,7 @@ class ReplyThreadRequest extends FormRequest
         return [
             //
             'captcha' => 'required|captcha',
-            'name'=>'max:100|string|alpha_dash',
+            'name'=>'max:100',
             'editor_js_content'=>['required',new EditorJsRule()]
         ];
     }
@@ -60,7 +60,10 @@ class ReplyThreadRequest extends FormRequest
 
     public function getName():?string{
 
-        return $this->input("name");
+        if($this->input("name")){
+            return strip_tags($this->input("name"));
+        }
+        return null;
     }
     public function getBlocks():array{
         $editor_js_content=$this->input("editor_js_content");
