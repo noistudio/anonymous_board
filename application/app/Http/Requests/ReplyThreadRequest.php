@@ -33,7 +33,7 @@ class ReplyThreadRequest extends FormRequest
         return [
             //
             'captcha' => 'required|captcha',
-            'name'=>'max:100',
+            'name'=>'max:100|string|alpha',
             'editor_js_content'=>['required',new EditorJsRule()]
         ];
     }
@@ -42,6 +42,8 @@ class ReplyThreadRequest extends FormRequest
     {
         return [
             'name.max' => 'Максимальная длина Имени 100 символов',
+            'name.string'=>'Должно быть строкой',
+            'name.alpha'=>'Должны быть только буквы и цифры',
             'editor_js_content.required' => 'Вы не ввели текст сообщения',
             'captcha.required' => 'Капча обязательная для заполнения'
         ];
