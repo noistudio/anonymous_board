@@ -30,7 +30,7 @@ class OpenThreadRequest extends FormRequest
         return [
             //
             'captcha' => 'required|captcha',
-            'name'=>'max:100|string|alpha',
+            'name'=>'max:100|string|alpha_dash',
             'editor_js_content'=>['required',new EditorJsRule()]
         ];
     }
@@ -41,7 +41,7 @@ class OpenThreadRequest extends FormRequest
         return [
             'name.max' => 'Максимальная длина Имени 100 символов',
             'name.string'=>'Должно быть строкой',
-            'name.alpha'=>'Должны быть только буквы и цифры',
+            'name.alpha_dash'=>'Должны быть только буквы и цифры',
             'editor_js_content.required' => 'Вы не ввели текст сообщения',
             'captcha.required' => 'Капча обязательная для заполнения'
         ];
