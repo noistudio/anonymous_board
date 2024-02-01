@@ -20,9 +20,13 @@ class ThreadRepository
 
     }
 
-    function getAllThreads(Board $board){
+    function getAllThreads(Board $board,int|null $offset=null,int|null $limit=null){
         $search_string=request()->input("search");
-        return $this->service->getAll($board,$search_string);
+        return $this->service->getAll($board,$search_string,$offset,$limit);
+    }
+    function getCountAllThreads(Board $board){
+        $search_string=request()->input("search");
+        return $this->service->getCountAll($board,$search_string);
     }
 
     function getCount(Board $board,$thread_id,$message_id=null){

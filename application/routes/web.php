@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\web\HomeController::class,"index"])->name("site.index");
 Route::get("/ajax/generateImg",[\App\Http\Controllers\web\AjaxController::class,"generateImg"])->name("ajax.captcha");
+Route::get("/ajax/threads/{alias}/{offset}",[\App\Http\Controllers\web\AjaxController::class,"loadThreads"]);
 Route::get("/ajax/{alias}/{thread_id}/{message_id}",[\App\Http\Controllers\web\AjaxController::class,"newMessages"])->name("ajax.newMessages");
 Route::get("/ajax/{alias}/{thread_id}/{message_id}/count",[\App\Http\Controllers\web\AjaxController::class,"newMessagesCount"])->name("ajax.newMessagesCount");
 Route::middleware(\App\Http\Middleware\CheckBan::class)->group(function(){

@@ -1,4 +1,5 @@
 @extends("web.layout.main")
+@section('meta_title', env('APP_NAME'))
 @section('content')
     <div class="container">
         <h2 class="text-center pt-2 pb-2">Доски</h2>

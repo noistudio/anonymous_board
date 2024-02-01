@@ -53,11 +53,28 @@ class ThreadClientService implements \App\Api\Domain\Thread\Services\ThreadServi
         }
         return $thread;
     }
+    public function getCountAll(Board $board,?String $search_value=null):int{
+        $count=Threads::query()->withCount("posts")->where(function(Builder $query) use ($board){
+            $query->where('board_id',$board->getId());
+            $query->where("ismain",true);
+
+        })->where(function(Builder $query) use ($search_value){
+            if($search_value){
+                $query->orWhere("content_txt","like",$search_value);
+                $query->orWhere("content_txt","like","%".$search_value);
+                $query->orWhere("content_txt","like",$search_value."%");
+                $query->orWhere("content_txt","like","%".$search_value."%");
+            }
+        })->orderByDesc("ispinned")->orderByDesc("updated_at")->count();
+
+        return $count;
+    }
     /**
      * @inheritDoc
      */
-    public function getAll(Board $board,?String $search_value=null): array
+    public function getAll(Board $board,?String $search_value=null,?int $offset=null,?int $limit=null): array
     {
+
 
         $rows=Threads::query()->withCount("posts")->where(function(Builder $query) use ($board){
             $query->where('board_id',$board->getId());
@@ -70,7 +87,17 @@ class ThreadClientService implements \App\Api\Domain\Thread\Services\ThreadServi
                 $query->orWhere("content_txt","like",$search_value."%");
                 $query->orWhere("content_txt","like","%".$search_value."%");
             }
-        })->orderByDesc("ispinned")->orderByDesc("updated_at")->get();
+        })->orderByDesc("ispinned")->orderByDesc("updated_at");
+        if($limit){
+
+            if(is_null($offset)){
+              $offset=0;
+            }
+
+            $rows=$rows->limit($limit)->offset($offset);
+        }
+        $rows=$rows->get();
+
 
         $result=[];
         if(count($rows)){

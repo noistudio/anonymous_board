@@ -1,4 +1,5 @@
 @extends("web.layout.main")
+@section('meta_title', "Тред #".$thread[0]->getId())
 @section('content')
     <div class="container">
         <nav aria-label="breadcrumb">

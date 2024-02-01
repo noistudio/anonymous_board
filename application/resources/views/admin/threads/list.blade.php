@@ -91,6 +91,19 @@
                     @endforeach
                 @endif
 
+                <div class="row">
+                    <div class="col-6">
+                        @if(isset($prev_offset))
+                            <a class="btn" href="?offset={{$prev_offset}}&board_alias={{ $current_board->getAlias() }}">Назад</a>
+                        @endif
+                    </div>
+                    <div class="col-6">
+                        @if($count>$next_offset)
+                            <a class="btn" href="?offset={{$next_offset}}&board_alias={{ $current_board->getAlias() }}">Вперед</a>
+
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
 

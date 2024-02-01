@@ -1,5 +1,37 @@
 <script>
     $(document).ready(function(){
+        var counter=0;
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() - $(window).height() && counter < 2) {
+
+                if($(".list_threads").length>0){
+                    appendThreads();
+
+                }
+            }
+        });
+        function appendThreads(){
+            counter=2;
+            var board_alias=$(".thread_list_data").data("board-alias");
+            var count=parseInt($(".thread_list_data").data("count"));
+            var offset=parseInt($(".thread_list_data").data("offset"));
+            var url="/ajax/threads/"+board_alias+"/"+offset;
+            if(count>offset) {
+                $.get(url, function (data) {
+                    if (data.results && data.results.length > 0) {
+                        $(".thread_list_data").data("offset",data.offset);
+                        data.results.forEach((element) => {
+                            $(".list_threads").append(element);
+                        });
+
+                        counter=0;
+                    }
+                });
+            }
+
+        }
+
+
         function isExistFavorite(thread_id){
             var favorites=getFavoriteObject();
             if(favorites.hasOwnProperty("thread_"+thread_id)){

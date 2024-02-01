@@ -22,7 +22,10 @@ class BoardController extends Controller
     function index($alias){
         $data=[];
         $data['board']=$this->board_repository->getBoard($alias);
-        $data['threads']=$this->thread_repository->getAllThreads($data['board']);
+        $data['threads']=$this->thread_repository->getAllThreads($data['board'],null,10);
+        $data['count']=$this->thread_repository->getCountAllThreads($data['board']);
+        $data['offset']=count($data['threads']);
+
         $data['iscan']=$this->thread_repository->isCan($data['board']);
 
         return view("web.pages.board",$data);

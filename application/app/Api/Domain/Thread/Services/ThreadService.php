@@ -17,7 +17,8 @@ interface ThreadService
      *
      * @return array
      */
-    public function getAll(Board $board,?String $search_value=null):array;
+    public function getCountAll(Board $board,?String $search_value=null,):int;
+    public function getAll(Board $board,?String $search_value=null,?int $offset=null,?int $limit=null):array;
 
     public function getCountMessages(Board $board,Int $Id,?String $search_value=null,?int $lastMessageId=null):int;
 

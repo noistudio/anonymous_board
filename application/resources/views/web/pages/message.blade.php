@@ -1,4 +1,5 @@
 @extends("web.layout.main")
+@section('meta_title', "Сообщение #".$message->getId())
 @section('content')
     <div class="container  " >
         <nav aria-label="breadcrumb">

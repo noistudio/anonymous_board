@@ -1,6 +1,7 @@
 @extends("web.layout.main")
+@section('meta_title', "Доска ".$board->getTitle())
 @section('content')
-    <div class="container">
+    <div class="container thread_list_data" data-board-alias="{{ $board->getAlias() }}" data-count="{{ $count }}" data-offset="{{ $offset }}">
         <h2 class="text-center pt-2 pb-2">Доска {{ $board->getTitle() }}</h2>
         <div class="col-12 mb-2 mt-2">
             @if($iscan)
@@ -17,11 +18,13 @@
         @endif
 
         @if(count($threads))
+            <div class="col-12 mb-2 mt-2 list_threads">
             @foreach($threads as $thread)
-              <div class="col-12 mb-2 mt-2">
-                  @include("web.components.message_first",["thread"=>$thread])
-              </div>
+
+                  @include("web.components.message_first",["thread"=>$thread,'board'=>$board])
+
             @endforeach
+            </div>
         @endif
 
     </div>

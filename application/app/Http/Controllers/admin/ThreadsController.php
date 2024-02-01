@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Api\Domain\Board\Services\BoardService;
 use App\Api\Domain\Thread\Services\ThreadService;
+use App\Api\UI\Thread\Repository\ThreadRepository;
 use App\Http\Controllers\Controller;
 use App\Models\Threads;
 
@@ -11,13 +12,17 @@ class ThreadsController extends Controller
 {
     private ThreadService $thread_service;
     private BoardService  $board_service;
+    private ThreadRepository $thread_repository;
     public function __construct()
     {
         $this->thread_service=app()->make(ThreadService::class);
         $this->board_service=app()->make(BoardService::class);
+        $this->thread_repository=app()->make(ThreadRepository::class);
+
 
     }
     function index(){
+        $offset=request()->input('offset',0);
         $data=[];
         $data['boards']=$this->board_service->getAll();
         if(count($data['boards'])>0){
@@ -26,7 +31,12 @@ class ThreadsController extends Controller
         if($input_board_alias){
             $data['current_board']=$this->board_service->get($input_board_alias);
         }
-        $data['threads']=$this->thread_service->getAll($data['current_board']);
+        $data['threads']=$this->thread_repository->getAllThreads($data['current_board'],$offset,10);
+        if($offset>=10){
+         $data['prev_offset']=$offset-10;
+        }
+        $data['next_offset']=$offset+count($data['threads']);
+        $data['count']=$this->thread_repository->getCountAllThreads($data['current_board']);
 
             return view("admin.threads.list",$data);
         }
