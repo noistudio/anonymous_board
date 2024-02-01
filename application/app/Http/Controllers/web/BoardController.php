@@ -22,7 +22,7 @@ class BoardController extends Controller
     function index($alias){
         $data=[];
         $data['board']=$this->board_repository->getBoard($alias);
-        $data['threads']=$this->thread_repository->getAllThreads($data['board'],null,10);
+        $data['threads']=$this->thread_repository->getAllThreads($data['board'],null,50);
         $data['count']=$this->thread_repository->getCountAllThreads($data['board']);
         $data['offset']=count($data['threads']);
 

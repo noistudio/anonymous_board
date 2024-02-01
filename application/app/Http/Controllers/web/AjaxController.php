@@ -65,7 +65,7 @@ class AjaxController extends Controller
         $board = $this->board_repository->getBoard($alias);
 
         $offset  = (int) $offset;
-        $rows    = $this->thread_repository->getAllThreads($board, $offset, 10);
+        $rows    = $this->thread_repository->getAllThreads($board, $offset, 50);
         $results = [];
         if (count($rows) > 0)
         {
