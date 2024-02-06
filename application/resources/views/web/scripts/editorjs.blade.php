@@ -117,30 +117,7 @@
             return false;
         })
 
-        $(".before_click_link").on("click",function(){
-            var link=$(this).data("link");
-            var base_url=$("body").data("main-message-url");
-            var ajax_message_url=$("body").data("ajax-message-url");
 
-
-            if(link.includes(base_url)){
-                var myModal = new bootstrap.Modal(document.getElementById('modalMessage'));
-
-                var alias_id_message=link.replace(base_url,"");
-
-
-                var id_message=alias_id_message.split("/")[2];
-                 var new_url=ajax_message_url+alias_id_message;
-
-                $.get( new_url, function( data ) {
-                    $(".ajax_message_title").text("#"+id_message);
-                    $( ".ajax_message_body" ).html( data );
-                    myModal.show();
-                });
-                return false;
-            }
-
-        });
 
 
 
