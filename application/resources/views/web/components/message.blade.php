@@ -21,7 +21,7 @@
                 @include("web.components.editorjs_render",["json"=>$thread->getContentJSON()])
             </div>
             <div class="row mt-2">
-                @if(!(isset($notreply)) and  !$first->getIsClose() )
+                @if(!(isset($notreply)) and isset($first) and !$first->getIsClose() )
                 <div class="col-4">
                     <a href="#" data-name="#{{ $thread->getId() }}" data-link="{{ route('site.board.message',['alias'=>$board->getAlias(),'id'=>$thread->getId()]) }}" class="btn-quote-action btn btn-primary">Ответить</a>
                 </div>

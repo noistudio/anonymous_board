@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\web\HomeController::class,"index"])->name("site.index");
+Route::get("/ajax/message/{alias}/{id}",[\App\Http\Controllers\web\AjaxController::class,"message"]);
+Route::get("/ajax/answers/{alias}/{id}",[\App\Http\Controllers\web\AjaxController::class,"answers"])->name('ajax.answers');
 Route::get("/ajax/generateImg",[\App\Http\Controllers\web\AjaxController::class,"generateImg"])->name("ajax.captcha");
 Route::get("/ajax/threads/{alias}/{offset}",[\App\Http\Controllers\web\AjaxController::class,"loadThreads"]);
 Route::get("/ajax/{alias}/{thread_id}/{message_id}",[\App\Http\Controllers\web\AjaxController::class,"newMessages"])->name("ajax.newMessages");
@@ -34,8 +36,7 @@ Route::get("/{alias}",[\App\Http\Controllers\web\BoardController::class,"index"]
 
 Route::get("/{alias}/{thread_id}",[\App\Http\Controllers\web\BoardController::class,"openThread"])->name('site.board.thread');
 Route::get("/message/{alias}/{id}",[\App\Http\Controllers\web\BoardController::class,"message"])->name("site.board.message");
-Route::get("/ajax/message/{alias}/{id}",[\App\Http\Controllers\web\AjaxController::class,"message"]);
-Route::get("/ajax/answers/{alias}/{id}",[\App\Http\Controllers\web\AjaxController::class,"answers"])->name('ajax.answers');
+
 
 //Route::group(['prefix' =>LaravelLocalization::setLocale()], function()
 //{
