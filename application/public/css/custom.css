@@ -97,12 +97,12 @@
 
     opacity: 1;
 }
-.ce-toolbar__content{
-    max-width: 100%;
-    float: left;
-    margin-left: 0px;
-    top:30px;
-}
+/*.ce-toolbar__content{*/
+/*    max-width: 100%;*/
+/*    float: left;*/
+/*    margin-left: 0px;*/
+/*    top:30px;*/
+/*}*/
 /*.ce-popover--opened{*/
 /*    left:50px !important;*/
 /*}*/

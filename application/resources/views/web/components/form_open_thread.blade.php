@@ -18,7 +18,9 @@
 </div>
 <div class="col-12 mb-2 mt-2">
     <p class="image_captcha">{!! captcha_img() !!}</p>
+    <p><button class="btn regenarate_captcha" type="button">обновить</button></p>
     <p><input type="text" name="captcha"></p>
+
 </div>
     <div class="alert alert-danger form-answer-error" style="display:none">
 

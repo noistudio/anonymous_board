@@ -30,7 +30,9 @@
             <div class="d-flex justify-content-center">
                 <div class="col-6">
                     <p class="image_captcha">{!! captcha_img() !!}</p>
+                    <p><button class="btn regenarate_captcha" type="button">обновить</button></p>
                     <p><input type="text" name="captcha"></p>
+
                 </div>
                 <div class="col-6">
                     {{ csrf_field() }}

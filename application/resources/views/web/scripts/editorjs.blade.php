@@ -39,6 +39,10 @@
             });
         }
 
+        $(".regenarate_captcha").on("click",function(){
+            reloadCaptcha();
+        })
+
         $(".ajax_form").on("submit",function(){
             var form = document.querySelector('.ajax_form');
             $(".form-answer-error").hide();
