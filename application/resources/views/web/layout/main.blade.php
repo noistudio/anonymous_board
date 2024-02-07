@@ -84,9 +84,10 @@
 
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}" crossorigin="anonymous"></script>
 <script src="{{ asset('js/jquery-3-5-1.js') }}"></script>
+@include("web.scripts.btns")
 @section('footer_js')
 @show
-@include("web.scripts.btns")
+
 <link href="{{ asset('css/footer.css') }}" rel="stylesheet">
 </body>
 </html>

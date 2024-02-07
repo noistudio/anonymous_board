@@ -115,13 +115,11 @@
         margin-left:0px;
 
     }
-    .ce-block__content, .ce-toolbar__content {
+    .ce-block__content {
         max-width:calc(100% - 10px) !important;
 
     }
-    .ce-toolbar__actions--opened{
-        left:10px;
-    }
+
 
 }
 @media (min-width:641px)  {

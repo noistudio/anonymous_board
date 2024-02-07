@@ -26,9 +26,385 @@
 <script src="{{ asset('js/editorjs/editorjs.js') }}"></script>
 <script src="{{ asset("js/editorjs/editorjs-paragraph-with-alignment.js") }}"></script>
 <script>
+     window.editor="";
+     var in_js_user_data={"blocks":[
+             {
+                 "id":"feFcOi5sm8",
+                 "type":"header",
+                 "data":{
+                     "text":"",
 
+                 }
+             },
+             {
+                 "id":"feFcOi5sm7",
+                 "type":"paragraph",
+                 "data":{
+                     "text":"",
+
+                 }
+             }
+         ]};
+
+
+     var image_lang_tool_name="Фото или Видео";
+     var image_lang_tool_arr={
+         "title":"Фото или видео",
+         'Couldn’t upload image. Please try another.':'Произошла ошибка при загрузке изображения или видео.',
+     };
+     var image_config={
+
+         types:"image/*,video/mp4,video/avi",
+         'captionPlaceholder':"Введите заголовок",
+         'buttonContent':'Выберите изображение или видео(mp4,avi)( до 50 MB)',
+         endpoints: {
+             byFile: "{{ route('site.editorjs.upload.image_video',$board->getAlias()) }}", // Your backend file uploader endpoint
+
+         }
+
+     };
+
+
+
+     var editorJsTools={
+         /**
+          * Each Tool is a Plugin. Pass them via 'class' option with necessary settings {@link docs/tools.md}
+          */
+         paragraph: {
+             class: Paragraph,
+             // class:paragraph,
+
+             inlineToolbar: true,
+             config:{
+                 placeholder:"Нажмите Tab или кнопку + для выбора инструмента",
+             }
+         },
+         header: {
+             class: Header,
+             inlineToolbar: ['link'],
+             config: {
+                 placeholder: 'Заголовок'
+             },
+             shortcut: 'CMD+SHIFT+H'
+         },
+         embed: Embed,
+         linkTool: {
+             class : LinkTool,
+             config: {
+                 endpoint: '{{ route('site.editorjs.parse_url',$board->getAlias()) }}',
+             }
+         },
+         image: {
+             class: window.ImageTool,
+             inlineToolbar: true,
+             config: image_config
+         },
+
+         {{--image: {--}}
+         {{--    class: window.ImageTool,--}}
+         {{--    inlineToolbar: true,--}}
+         {{--    config: image_config--}}
+         {{--},--}}
+         {{--vote:{--}}
+         {{--    class:window.Vote,--}}
+         {{--    config:{--}}
+         {{--        url:{--}}
+         {{--            create_vote:"{{ route('site.index') }}",--}}
+         {{--            get_vote:"{{ route('site.index',"id") }}",--}}
+         {{--        }--}}
+         {{--    }--}}
+         {{--},--}}
+         {{--maps:{--}}
+         {{--    class:window.Maps,--}}
+         {{--    config:{--}}
+         {{--        url:"{{ route('site.index') }}",--}}
+         {{--    }--}}
+         {{--},--}}
+         {{--/**--}}
+         {{-- * Or pass class directly without any configuration--}}
+         {{-- */--}}
+         {{--carousel: {--}}
+         {{--    class: Carousel,--}}
+         {{--    inlineToolbar: true,--}}
+         {{--    config: {--}}
+         {{--        endpoints: {--}}
+         {{--            byFile: "{{ route('site.index') }}",--}}
+         {{--            // removeImage: "URL_FETCH", //default null--}}
+         {{--        },--}}
+         {{--        additionalRequestHeaders: {--}}
+         {{--            // 'authorization': 'Bearer eyJhbGciJ9...TJVA95OrM7h7HgQ',--}}
+         {{--            // ...--}}
+         {{--        },--}}
+         {{--        field: 'image',--}}
+         {{--        types: 'image/*',--}}
+         {{--        // additionalRequestData: { // for custom data--}}
+         {{--        //     name: 'your custom data name',--}}
+         {{--        //     order_data: 'your order custom data',--}}
+         {{--        // },--}}
+         {{--        // galleryCallback: 'your_prefer_callback_data' // object return is required--}}
+         {{--    }--}}
+         {{--},--}}
+         {{--AnyButton: {--}}
+         {{--    class: AnyButton,--}}
+         {{--    inlineToolbar: false,--}}
+         {{--    config:{--}}
+         {{--        css:{--}}
+         {{--            "btnColor": "btn--gray",--}}
+         {{--        }--}}
+         {{--    }--}}
+         {{--},--}}
+         {{--attaches: {--}}
+         {{--    class: AttachesTool,--}}
+         {{--    config: {--}}
+         {{--        buttonText:"Загрузить файл(до 50МБ)",--}}
+         {{--        errorMessage:"При загрузке файла произошла ошибка. Максимальный размер файла 50мб",--}}
+         {{--        endpoint: '{{ route('site.index') }}',--}}
+         {{--    }--}}
+         {{--},--}}
+         {{--list: {--}}
+         {{--    class: List,--}}
+         {{--    inlineToolbar: true,--}}
+         {{--    shortcut: 'CMD+SHIFT+L'--}}
+         {{--},--}}
+
+         {{--checklist: {--}}
+         {{--    class: Checklist,--}}
+         {{--    inlineToolbar: true,--}}
+         {{--},--}}
+
+         {{--quote: {--}}
+         {{--    class: Quote,--}}
+         {{--    inlineToolbar: true,--}}
+         {{--    config: {--}}
+         {{--        quotePlaceholder: 'Enter a quote',--}}
+         {{--        captionPlaceholder: 'Quote\'s author',--}}
+         {{--    },--}}
+         {{--    shortcut: 'CMD+SHIFT+O'--}}
+         {{--},--}}
+
+         {{--warning: Warning,--}}
+
+         {{--marker: {--}}
+         {{--    class:  Marker,--}}
+         {{--    shortcut: 'CMD+SHIFT+M'--}}
+         {{--},--}}
+
+
+
+         {{--delimiter: Delimiter,--}}
+
+         {{--inlineCode: {--}}
+         {{--    class: InlineCode,--}}
+         {{--    shortcut: 'CMD+SHIFT+C'--}}
+         {{--},--}}
+         {{--figma:FigmaEmbed,--}}
+         {{--rutubeembed:RutubeEmbed,--}}
+         {{--vkvideoembed:VkVideoEmbed,--}}
+         {{--vkclipsembed:VkClipsEmbed,--}}
+         {{--telegramembed:TelegramEmbed,--}}
+
+
+         {{--embed: Embed,--}}
+
+         {{--table: {--}}
+         {{--    class: Table,--}}
+         {{--    inlineToolbar: true,--}}
+         {{--    shortcut: 'CMD+ALT+T'--}}
+         {{--},--}}
+         {{--linkTool: {--}}
+         {{--    class: LinkTool,--}}
+         {{--    config:{--}}
+         {{--        endpoint:'{{ route('site.index') }}',--}}
+         {{--    }--}}
+
+
+         {{--},--}}
+     };
+
+
+     function init_editor(data_to_render){
+         try{
+             window.editor.destroy();
+
+         }catch(err){}
+         if(data_to_render.blocks.length==0){
+             data_to_render={"blocks":[
+                     {
+                         "id":"feFcOi5sm8",
+                         "type":"header",
+                         "data":{
+                             "text":"",
+
+                         }
+                     },
+                     {
+                         "id":"feFcOi5sm7",
+                         "type":"paragraph",
+                         "data":{
+                             "text":"",
+
+                         }
+                     }
+                 ]};
+         }
+
+         window.editor = new EditorJS({
+             /**
+              * Wrapper of Editor
+              */
+             holderId: 'editorjs',
+             i18n: {
+                 /**
+                  * @type {I18nDictionary}
+                  */
+                 messages: {
+                     /**
+                      * Other below: translation of different UI components of the editor.js core
+                      */
+                     ui: {
+                         "blockTunes": {
+                             "toggler": {
+                                 "Click to tune": "Нажмите, чтобы настроить",
+                                 "or drag to move": "или перетащите"
+                             },
+                         },
+                         "inlineToolbar": {
+                             "converter": {
+                                 "Convert to": "Конвертировать в"
+                             }
+                         },
+                         "toolbar": {
+                             "toolbox": {
+                                 "Add": "Добавить"
+                             }
+                         }
+                     },
+
+                     /**
+                      * Section for translation Tool Names: both block and inline tools
+                      */
+                     toolNames: {
+                         "Columns":"Колонки",
+                         "Carousel":"Галлерея",
+                         "Button":"Кнопка",
+                         "Text": "Параграф",
+                         "Heading": "Заголовок",
+                         "List": "Список",
+                         "Warning": "Примечание",
+                         "Checklist": "Чеклист",
+                         "Quote": "Цитата",
+                         "Code": "Код",
+                         "Delimiter": "Разделитель",
+                         "Raw HTML": "HTML-фрагмент",
+                         "Table": "Таблица",
+                         "Link": "Ссылка",
+                         "Marker": "Маркер",
+                         "Bold": "Полужирный",
+                         "Italic": "Курсив",
+                         "InlineCode": "Моноширинный",
+                         'Image':image_lang_tool_name,
+                         'Attachment':'Файл',
+                     },
+
+                     /**
+                      * Section for passing translations to the external tools classes
+                      */
+                     tools: {
+                         /**
+                          * Each subsection is the i18n dictionary that will be passed to the corresponded plugin
+                          * The name of a plugin should be equal the name you specify in the 'tool' section for that plugin
+                          */
+                         "AnyButton": {
+                             'Button Text': 'текст отображения на кнопке',
+                             'Link Url': 'Ссылка',
+                             'Set': "Создать кнопку",
+                             'Default Button': "По умолчанию",
+                         },
+                         "header":{
+                             "title":"Заголовок",
+                         },
+
+
+                         "image":image_lang_tool_arr,
+                         "warning": { // <-- 'Warning' tool will accept this dictionary section
+                             "Title": "Название",
+                             "Message": "Сообщение",
+                         },
+
+                         /**
+                          * Link is the internal Inline Tool
+                          */
+                         "link": {
+                             "Add a link": "Вставьте ссылку"
+                         },
+                         /**
+                          * The "stub" is an internal block tool, used to fit blocks that does not have the corresponded plugin
+                          */
+                         "stub": {
+                             'The block can not be displayed correctly.': 'Блок не может быть отображен'
+                         }
+                     },
+
+                     /**
+                      * Section allows to translate Block Tunes
+                      */
+                     blockTunes: {
+                         /**
+                          * Each subsection is the i18n dictionary that will be passed to the corresponded Block Tune plugin
+                          * The name of a plugin should be equal the name you specify in the 'tunes' section for that plugin
+                          *
+                          * Also, there are few internal block tunes: "delete", "moveUp" and "moveDown"
+                          */
+                         "delete": {
+                             "Delete": "Удалить"
+                         },
+                         "moveUp": {
+                             "Move up": "Переместить вверх"
+                         },
+                         "moveDown": {
+                             "Move down": "Переместить вниз"
+                         }
+                     },
+                 }
+             },
+             /**
+              * Tools list
+              */
+             tools: editorJsTools,
+
+             /**
+              * This Tool will be used as default
+              */
+             // initialBlock: 'paragraph',
+
+             /**
+              * Initial Editor data
+              */
+             data: {
+                 blocks:[],
+             },
+             onReady: function(){
+                 window.editor.render( data_to_render);
+                 // saveButton.click();
+             },
+             onChange: function() {
+                 $(".btn_form").hide();
+                 window.editor.save().then( savedData => {
+
+                     console.log(savedData);
+                     var formData = JSON.stringify(savedData);
+                     $(".editor_js_content").val(formData)
+                     $(".btn_form").show();
+
+                 })
+                 console.log('something changed');
+             }
+         });
+     }
 
     $(document).ready(function(){
+
+
         function reloadCaptcha(){
             $("[name='captcha']").val("");
             var url="{{ route("ajax.captcha") }}";
@@ -42,7 +418,9 @@
         $(".regenarate_captcha").on("click",function(){
             reloadCaptcha();
         })
-
+        if($(".auto_init_editorjs").length>0){
+            init_editor({"blocks":[]});
+        }
         $(".ajax_form").on("submit",function(){
             var form = document.querySelector('.ajax_form');
             $(".form-answer-error").hide();
@@ -98,10 +476,11 @@
         });
 
         $("body").on("click",".btn-quote-action",function(){
-            try{
+
                 var link=$(this).data("link");
                 var name=$(this).data("name");
-                const blockToAdd = {
+                var blockToAdd = {
+
                     type: 'linkTool',
                     data: {
                         "link":link,
@@ -111,10 +490,10 @@
 
                     }
                 };
-                editor.blocks.insert("linkTool", blockToAdd.data);
-            }catch(err){
+                //editor.blocks.insert("linkTool", blockToAdd.data);
+                console.log('before add',blockToAdd);
+                addData_Toeditor(blockToAdd);
 
-            }
 
 
 
@@ -125,350 +504,42 @@
 
 
 
-        var in_js_user_data={"blocks":[
-                {
-                    "id":"feFcOi5sm8",
-                    "type":"header",
-                    "data":{
-                        "text":"",
 
-                    }
-                },
-                {
-                    "id":"feFcOi5sm7",
-                    "type":"paragraph",
-                    "data":{
-                        "text":"",
-
-                    }
-                }
-            ]};
-
-
-        var image_lang_tool_name="Фото или Видео";
-        var image_lang_tool_arr={
-            "title":"Фото или видео",
-            'Couldn’t upload image. Please try another.':'Произошла ошибка при загрузке изображения или видео.',
-        };
-        var image_config={
-
-            types:"image/*,video/mp4,video/avi",
-            'captionPlaceholder':"Введите заголовок",
-            'buttonContent':'Выберите изображение или видео(mp4,avi)( до 50 MB)',
-            endpoints: {
-                byFile: "{{ route('site.editorjs.upload.image_video',$board->getAlias()) }}", // Your backend file uploader endpoint
-
-            }
-
-        };
-
-
-
-        var editorJsTools={
-            /**
-             * Each Tool is a Plugin. Pass them via 'class' option with necessary settings {@link docs/tools.md}
-             */
-            paragraph: {
-                class: Paragraph,
-                // class:paragraph,
-
-                inlineToolbar: true,
-                config:{
-                    placeholder:"Нажмите Tab или кнопку + для выбора инструмента",
-                }
-            },
-            header: {
-                class: Header,
-                inlineToolbar: ['link'],
-                config: {
-                    placeholder: 'Заголовок'
-                },
-                shortcut: 'CMD+SHIFT+H'
-            },
-            embed: Embed,
-            linkTool: {
-                class : LinkTool,
-                config: {
-                    endpoint: '{{ route('site.editorjs.parse_url',$board->getAlias()) }}',
-                }
-            },
-            image: {
-                class: window.ImageTool,
-                inlineToolbar: true,
-                config: image_config
-            },
-
-            {{--image: {--}}
-            {{--    class: window.ImageTool,--}}
-            {{--    inlineToolbar: true,--}}
-            {{--    config: image_config--}}
-            {{--},--}}
-            {{--vote:{--}}
-            {{--    class:window.Vote,--}}
-            {{--    config:{--}}
-            {{--        url:{--}}
-            {{--            create_vote:"{{ route('site.index') }}",--}}
-            {{--            get_vote:"{{ route('site.index',"id") }}",--}}
-            {{--        }--}}
-            {{--    }--}}
-            {{--},--}}
-            {{--maps:{--}}
-            {{--    class:window.Maps,--}}
-            {{--    config:{--}}
-            {{--        url:"{{ route('site.index') }}",--}}
-            {{--    }--}}
-            {{--},--}}
-            {{--/**--}}
-            {{-- * Or pass class directly without any configuration--}}
-            {{-- */--}}
-            {{--carousel: {--}}
-            {{--    class: Carousel,--}}
-            {{--    inlineToolbar: true,--}}
-            {{--    config: {--}}
-            {{--        endpoints: {--}}
-            {{--            byFile: "{{ route('site.index') }}",--}}
-            {{--            // removeImage: "URL_FETCH", //default null--}}
-            {{--        },--}}
-            {{--        additionalRequestHeaders: {--}}
-            {{--            // 'authorization': 'Bearer eyJhbGciJ9...TJVA95OrM7h7HgQ',--}}
-            {{--            // ...--}}
-            {{--        },--}}
-            {{--        field: 'image',--}}
-            {{--        types: 'image/*',--}}
-            {{--        // additionalRequestData: { // for custom data--}}
-            {{--        //     name: 'your custom data name',--}}
-            {{--        //     order_data: 'your order custom data',--}}
-            {{--        // },--}}
-            {{--        // galleryCallback: 'your_prefer_callback_data' // object return is required--}}
-            {{--    }--}}
-            {{--},--}}
-            {{--AnyButton: {--}}
-            {{--    class: AnyButton,--}}
-            {{--    inlineToolbar: false,--}}
-            {{--    config:{--}}
-            {{--        css:{--}}
-            {{--            "btnColor": "btn--gray",--}}
-            {{--        }--}}
-            {{--    }--}}
-            {{--},--}}
-            {{--attaches: {--}}
-            {{--    class: AttachesTool,--}}
-            {{--    config: {--}}
-            {{--        buttonText:"Загрузить файл(до 50МБ)",--}}
-            {{--        errorMessage:"При загрузке файла произошла ошибка. Максимальный размер файла 50мб",--}}
-            {{--        endpoint: '{{ route('site.index') }}',--}}
-            {{--    }--}}
-            {{--},--}}
-            {{--list: {--}}
-            {{--    class: List,--}}
-            {{--    inlineToolbar: true,--}}
-            {{--    shortcut: 'CMD+SHIFT+L'--}}
-            {{--},--}}
-
-            {{--checklist: {--}}
-            {{--    class: Checklist,--}}
-            {{--    inlineToolbar: true,--}}
-            {{--},--}}
-
-            {{--quote: {--}}
-            {{--    class: Quote,--}}
-            {{--    inlineToolbar: true,--}}
-            {{--    config: {--}}
-            {{--        quotePlaceholder: 'Enter a quote',--}}
-            {{--        captionPlaceholder: 'Quote\'s author',--}}
-            {{--    },--}}
-            {{--    shortcut: 'CMD+SHIFT+O'--}}
-            {{--},--}}
-
-            {{--warning: Warning,--}}
-
-            {{--marker: {--}}
-            {{--    class:  Marker,--}}
-            {{--    shortcut: 'CMD+SHIFT+M'--}}
-            {{--},--}}
-
-
-
-            {{--delimiter: Delimiter,--}}
-
-            {{--inlineCode: {--}}
-            {{--    class: InlineCode,--}}
-            {{--    shortcut: 'CMD+SHIFT+C'--}}
-            {{--},--}}
-            {{--figma:FigmaEmbed,--}}
-            {{--rutubeembed:RutubeEmbed,--}}
-            {{--vkvideoembed:VkVideoEmbed,--}}
-            {{--vkclipsembed:VkClipsEmbed,--}}
-            {{--telegramembed:TelegramEmbed,--}}
-
-
-            {{--embed: Embed,--}}
-
-            {{--table: {--}}
-            {{--    class: Table,--}}
-            {{--    inlineToolbar: true,--}}
-            {{--    shortcut: 'CMD+ALT+T'--}}
-            {{--},--}}
-            {{--linkTool: {--}}
-            {{--    class: LinkTool,--}}
-            {{--    config:{--}}
-            {{--        endpoint:'{{ route('site.index') }}',--}}
-            {{--    }--}}
-
-
-            {{--},--}}
-        };
-
-
-        var editor = new EditorJS({
-            /**
-             * Wrapper of Editor
-             */
-            holderId: 'editorjs',
-            i18n: {
-                /**
-                 * @type {I18nDictionary}
-                 */
-                messages: {
-                    /**
-                     * Other below: translation of different UI components of the editor.js core
-                     */
-                    ui: {
-                        "blockTunes": {
-                            "toggler": {
-                                "Click to tune": "Нажмите, чтобы настроить",
-                                "or drag to move": "или перетащите"
-                            },
-                        },
-                        "inlineToolbar": {
-                            "converter": {
-                                "Convert to": "Конвертировать в"
-                            }
-                        },
-                        "toolbar": {
-                            "toolbox": {
-                                "Add": "Добавить"
-                            }
-                        }
-                    },
-
-                    /**
-                     * Section for translation Tool Names: both block and inline tools
-                     */
-                    toolNames: {
-                        "Columns":"Колонки",
-                        "Carousel":"Галлерея",
-                        "Button":"Кнопка",
-                        "Text": "Параграф",
-                        "Heading": "Заголовок",
-                        "List": "Список",
-                        "Warning": "Примечание",
-                        "Checklist": "Чеклист",
-                        "Quote": "Цитата",
-                        "Code": "Код",
-                        "Delimiter": "Разделитель",
-                        "Raw HTML": "HTML-фрагмент",
-                        "Table": "Таблица",
-                        "Link": "Ссылка",
-                        "Marker": "Маркер",
-                        "Bold": "Полужирный",
-                        "Italic": "Курсив",
-                        "InlineCode": "Моноширинный",
-                        'Image':image_lang_tool_name,
-                        'Attachment':'Файл',
-                    },
-
-                    /**
-                     * Section for passing translations to the external tools classes
-                     */
-                    tools: {
-                        /**
-                         * Each subsection is the i18n dictionary that will be passed to the corresponded plugin
-                         * The name of a plugin should be equal the name you specify in the 'tool' section for that plugin
-                         */
-                        "AnyButton": {
-                            'Button Text': 'текст отображения на кнопке',
-                            'Link Url': 'Ссылка',
-                            'Set': "Создать кнопку",
-                            'Default Button': "По умолчанию",
-                        },
-                        "header":{
-                            "title":"Заголовок",
-                        },
-
-
-                        "image":image_lang_tool_arr,
-                        "warning": { // <-- 'Warning' tool will accept this dictionary section
-                            "Title": "Название",
-                            "Message": "Сообщение",
-                        },
-
-                        /**
-                         * Link is the internal Inline Tool
-                         */
-                        "link": {
-                            "Add a link": "Вставьте ссылку"
-                        },
-                        /**
-                         * The "stub" is an internal block tool, used to fit blocks that does not have the corresponded plugin
-                         */
-                        "stub": {
-                            'The block can not be displayed correctly.': 'Блок не может быть отображен'
-                        }
-                    },
-
-                    /**
-                     * Section allows to translate Block Tunes
-                     */
-                    blockTunes: {
-                        /**
-                         * Each subsection is the i18n dictionary that will be passed to the corresponded Block Tune plugin
-                         * The name of a plugin should be equal the name you specify in the 'tunes' section for that plugin
-                         *
-                         * Also, there are few internal block tunes: "delete", "moveUp" and "moveDown"
-                         */
-                        "delete": {
-                            "Delete": "Удалить"
-                        },
-                        "moveUp": {
-                            "Move up": "Переместить вверх"
-                        },
-                        "moveDown": {
-                            "Move down": "Переместить вниз"
-                        }
-                    },
-                }
-            },
-            /**
-             * Tools list
-             */
-            tools: editorJsTools,
-
-            /**
-             * This Tool will be used as default
-             */
-            // initialBlock: 'paragraph',
-
-            /**
-             * Initial Editor data
-             */
-            data: {
-                blocks:[],
-            },
-            onReady: function(){
-                editor.render( in_js_user_data);
-                // saveButton.click();
-            },
-            onChange: function() {
-                $(".btn_form").hide();
-                editor.save().then( savedData => {
-                    var formData = JSON.stringify(savedData);
-                    $(".editor_js_content").val(formData)
-                    $(".btn_form").show();
-
-                })
-                console.log('something changed');
-            }
-        });
     })
+     function getRandomInt(min, max) {
+         min = Math.ceil(min);
+         max = Math.floor(max);
+         return Math.floor(Math.random() * (max - min + 1)) + min;
+     }
+     function addData_Toeditor(block){
+         var formData=$(".editor_js_content").val();
+         try{
+             var json=JSON.parse(formData);
+             if( typeof json != 'object'){
+                 json={"blocks":[]};
+             }
+         }catch(err){
+             json={"blocks":[]};
+         }
+         console.log(json);
+         block.id='feFc'+getRandomInt(0,100)+'i5sm'+getRandomInt(0,100);
+         json.blocks.push(block);
+
+         console.log(json);
+
+         $(".editor_js_content").val(JSON.stringify(json));
+     }
+     function rerender_editor(){
+         var formData=$(".editor_js_content").val();
+         try{
+             var json=JSON.parse(formData);
+         }catch(err){
+             json={"blocks":[]};
+         }
+         console.log(json);
+
+
+         init_editor(json);
+     }
+
 </script>

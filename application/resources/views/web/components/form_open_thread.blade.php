@@ -14,7 +14,7 @@
 </div>
 
 <div class="col-12 mb-2 mt-2">
-    <div id="editorjs"></div>
+    <div id="editorjs" class="auto_init_editorjs"></div>
 </div>
 <div class="col-12 mb-2 mt-2">
     <p class="image_captcha">{!! captcha_img() !!}</p>

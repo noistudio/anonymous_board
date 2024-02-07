@@ -187,12 +187,15 @@
         $(".btn-answer-form-show").on("click",function(){
             $(this).hide();
             $(".btn-answer-form-hide").show();
-            $(".form_answer_div").show();
+
+            $(".form_answer_div").removeClass("visually-hidden");
+            rerender_editor();
         });
         $(".btn-answer-form-hide").on("click",function(){
             $(this).hide();
             $(".btn-answer-form-show").show();
-            $(".form_answer_div").hide();
+
+            $(".form_answer_div").addClass("visually-hidden");
         });
         $(".btn-favorite-reload").on("click",function(){
             $(".ajax_message_body_favorite").html("<p>Идет загрузка</p>");
